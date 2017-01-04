@@ -1,0 +1,27 @@
+from urllib.request import urlopen  #用urllib.request的urlopen 和 bs4的BeautifulSoup库
+from bs4 import BeautifulSoup
+html = urlopen("http://www.pythonscraping.com/exercises/exercise1.html")  #用var html保存 网页全部信息
+bs0bj = BeautifulSoup(html)  #按照BeautifulSoup需要的格式，创建为其object，命名为bs0bj （BeautifulSoup的第0个object）
+print (bs0bj.div)  # 打开网页，查找源代码，发现标记：.h1 or .title or .div后面分别有其信息。按照需要分别打印。
+
+注意：BeautifulSoup 非常强大，只要目标信息旁边或者附近有标记， HTML或者XML文里的节点信息都可以被提取 不管其在第几层结构。
+按照本例子：bs0bj.html.body.h1 和 bs0bj.body.h1 和 bs0bj.h1 完全一样！
+
+用Try来处理异常
+html = urlopen("http://www.pythonscraping.com/exercises/exercise1.html")
+这里可能有两种异常：链接在服务器上不存在（urlopen函数报错：HTTPError 出现类似：404 Page Not Found 或者 500 Internet Server Error） 以及 服务器不存在（系统返回None对象）
+问题一二解决：
+try:
+    html = urlopen("http://www.pythonscraping.com/exercises/exercise1.html")
+except HTTPError as e:
+    print(e)
+    # 返回空值 中断程序 或者执行另一个方案
+else:
+    # 程序继续 如果我在上面异常捕捉那一段代码里面返回或者中断（break）,
+    # 那么就不需要使用else语句了 这段代码也不会执行
+
+if html is None:
+    print ("URL is not found")
+else:
+    #程序继续
+   
